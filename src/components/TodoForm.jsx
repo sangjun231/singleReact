@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const TodoForm = ({ todo, setTodo }) => {
   const [newTitle, setNewTitle] = useState("");
@@ -8,7 +9,7 @@ const TodoForm = ({ todo, setTodo }) => {
   const addTodo = (event) => {
     event.preventDefault();
     if (newTitle === "" || newBody === "") {
-      alert("제목과 내용를 입력하세요.");
+      toast.error("제목과 내용을 입력하세요.");
       setNewTitle("");
       setNewBody("");
       return;
@@ -24,7 +25,7 @@ const TodoForm = ({ todo, setTodo }) => {
 
   return (
     <div>
-      <h2>My Todo List</h2>
+      <h1>My Todo List</h1>
       <form id="submit" onSubmit={addTodo}>
         제목
         <input
