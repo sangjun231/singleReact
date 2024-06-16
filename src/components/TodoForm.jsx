@@ -1,32 +1,52 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const TodoForm = ({ todo, setTodo }) => {
+import { postTodo } from "../api/todo";
+import { v4 as uuidv4 } from "uuid";
+import todoStore from "../zustand/todoStore";
+
+const TodoForm = () => {
   const [newTitle, setNewTitle] = useState("");
   const [newBody, setNewBody] = useState("");
+  const queryClient = useQueryClient();
+  const { todos } = todoStore();
 
-  const addTodo = (event) => {
-    event.preventDefault();
-    if (newTitle === "" || newBody === "") {
-      toast.error("제목과 내용을 입력하세요.");
-      setNewTitle("");
-      setNewBody("");
+  const { mutate } = useMutation({
+    mutationFn: postTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["todos"]);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newTitle || !newBody) {
+      if (!toast.isActive("formError")) {
+        toast.error("제목과 내용을 입력해주세요.", {
+          toastId: "formError",
+        });
+      }
       return;
     }
 
-    setTodo([
-      ...todo,
-      { id: Date.now(), title: newTitle, body: newBody, isDone: false },
-    ]);
+    const newTodo = {
+      id: uuidv4(),
+      title: newTitle,
+      body: newBody,
+      isDone: false,
+    };
+    mutate(newTodo);
     setNewTitle("");
     setNewBody("");
+    toast.success("추가가 완료되었습니다.");
   };
 
   return (
     <div>
       <h1>My Todo List</h1>
-      <form id="submit" onSubmit={addTodo}>
+      <form id="submit" onSubmit={handleSubmit}>
         제목
         <input
           className="input"

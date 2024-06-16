@@ -30,7 +30,7 @@ export const deleteTodo = async (id) => {
   }
 };
 
-export const toggleTodo = async (id, isDone) => {
+export const toggleTodo = async ({ id, isDone }) => {
   try {
     const { data } = await axios.patch(`${JSON_SERVER_HOST}/${id}`, {
       isDone,

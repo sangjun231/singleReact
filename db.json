@@ -1,6 +1,28 @@
 {
   "todos": [
-    { "id": 1, "title": "John", "body": "hi", "isDone": false },
-    { "id": 2, "title": "Doe", "body": "hello", "isDone": true }
+    {
+      "id": "1",
+      "title": "John",
+      "body": "hi",
+      "isDone": true
+    },
+    {
+      "id": "2",
+      "title": "Doe",
+      "body": "hello",
+      "isDone": false
+    },
+    {
+      "id": "2c2943a6-e156-4439-a2b2-e76724eabfed",
+      "title": "해냈다",
+      "body": "개어렵다",
+      "isDone": true
+    },
+    {
+      "id": "734ced1a-5e23-4e97-a69e-0768e4afdea0",
+      "title": "드디어",
+      "body": "마침내",
+      "isDone": false
+    }
   ]
 }
